@@ -17,7 +17,7 @@ docker-compose -d up
 
 ```bash
 docker-compose exec app sh
-go run main.go
+go run server.go
 ```
 
 
