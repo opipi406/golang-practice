@@ -6,6 +6,8 @@ services:
       dockerfile: ./docker/golang/Dockerfile
     container_name: app
     tty: true
+    ports:
+      - 8080:8080
     volumes:
       - ./app:/go/src/app
     env_file:
