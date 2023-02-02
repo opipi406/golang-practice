@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  app:
+    build:
+      dockerfile: ./docker/golang/Dockerfile
+    container_name: app
+    tty: true
+    volumes:
+      - ./app:/go/src/app
+    env_file:
+      - .env
+    networks:
+      - golang_practice_network
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    build:
+      dockerfile: ./docker/db/Dockerfile
+    tty: true
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    env_file:
+      - .env
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+    networks:
+      - golang_practice_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    # platform: linux/amd64
+    container_name: phpmyadmin
+    depends_on:
+      - db
+    ports:
+      - 8089:80
+
+volumes:
+  db:
+networks:
+  golang_practice_network:
+    external: true
